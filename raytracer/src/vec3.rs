@@ -360,10 +360,10 @@ pub mod tests {
         );
     }
     
-    // #[test]
-    pub fn test_neg() {
-        assert_eq!(-Vec3::new(1.0, -2.0, 3.0), Vec3::new(-1.0, 2.0, -3.0));
-    }
+    // // #[test]
+    // pub fn test_neg() {
+    //     assert_eq!(-Vec3::new(1.0, -2.0, 3.0), Vec3::new(-1.0, 2.0, -3.0));
+    // }
 
     // #[test]
     pub fn test_squared_length() {
