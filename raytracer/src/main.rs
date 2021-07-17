@@ -1,4 +1,7 @@
 #![allow(warnings, unused)]
+#[allow(clippy::float_cmp)]
+use image::{ImageBuffer, RgbImage};
+use indicatif::ProgressBar;
 
 pub mod vec3;
 pub mod ray;
@@ -48,7 +51,7 @@ pub fn ray_color(r : Ray, list: &Hitlist, depth: i32) -> Color {
 
 
 fn main() {
-    // let mut file = File::create("image.ppm").unwrap();
+    let mut file = File::create("image.ppm").unwrap();
 
     const AS_RATIO:f64 = 3.0 / 2.0;
     const I_WID:i32 = 1200;
@@ -56,10 +59,12 @@ fn main() {
     const SAMPLES:i32 = 20; //500
     const MAXDEEP:i32 = 10; //50
 
+    let mut img: RgbImage = ImageBuffer::new(I_WID as u32, I_HIT as u32);
+    let bar = ProgressBar::new(I_HIT as u64);
+
     let mut list:Hitlist = Hitlist::new();
     let mat_g:Lamber = Lamber::new(Color::new(0.5, 0.5, 0.5));
     let sph_g:Sphere <Lamber> = Sphere::new(Vec3::new(0.0, -1000.0, 0.0), 1000.0, mat_g.clone());
-
 
     let mut a:i32 = -11;
     while a < 11 {
@@ -110,8 +115,7 @@ fn main() {
     let aperture:f64 = 0.1;
     let cam:Camera = Camera::new(lookfrom.clone(), lookat.clone(), vup.clone(), 20.0, AS_RATIO, aperture, dist_to_focus);
 
-    // file.write(format!("P3\n{} {}\n255\n", I_WID, I_HIT).as_bytes());
-    print!("P3\n{} {}\n255\n", I_WID, I_HIT);
+    file.write(format!("P3\n{} {}\n255\n", I_WID, I_HIT).as_bytes());
     let mut j:i32 = I_HIT - 1;
     while j >= 0 {
         let mut i:i32 = 0;
@@ -125,9 +129,16 @@ fn main() {
                 color += ray_color(r, &list, MAXDEEP);
                 s += 1;
             }
-            color::write_color(color, SAMPLES);
+            let pixel = img.get_pixel_mut(i as u32, (I_HIT - j - 1) as u32);
+            let otc:Color = color::out_color(color.clone(), SAMPLES);
+            *pixel = image::Rgb([otc.x() as u8, otc.y() as u8, otc.z() as u8]);
+            color::write_color(&mut file, color, SAMPLES);
             i += 1;
         }
+        bar.inc(1);
         j -= 1;
     }
+
+    img.save("output/test.png").unwrap();
+    bar.finish();
 }
