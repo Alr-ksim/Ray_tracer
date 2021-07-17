@@ -41,7 +41,7 @@ impl Vec3 {
 
     pub fn unit(&self) -> Self {
         let len:f64 = self.length() as f64;
-        // if len == 0.0 { panic!("zero vec"); }
+        if len == 0.0 { panic!("zero vec"); }
         Self {
             x : self.x / len,
             y : self.y / len,
