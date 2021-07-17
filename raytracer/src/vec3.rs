@@ -218,7 +218,11 @@ impl Neg for Vec3 {
     type Output = Self;
 
     fn neg(self) -> Self {
-        self * -1.0
+        Self {
+            x: -(self.x),
+            y: -(self.y),
+            z: -(self.z),
+        }
     }
 }
 
