@@ -359,11 +359,6 @@ pub mod tests {
             Vec3::new(8.0 - 9.0, 6.0 - 4.0, 3.0 - 4.0)
         );
     }
-    
-    // // #[test]
-    // pub fn test_neg() {
-    //     assert_eq!(-Vec3::new(1.0, -2.0, 3.0), Vec3::new(-1.0, 2.0, -3.0));
-    // }
 
     // #[test]
     pub fn test_squared_length() {
