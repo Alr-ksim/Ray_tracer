@@ -5,7 +5,7 @@ use std::io::prelude::*;
 
 pub type Color = Vec3;
 
-pub fn write_color(file: &mut File, color: Color, samples: i32) {
+pub fn write_color(color: Color, samples: i32) {
     const MAXC:f64 = 256.0;
     let mut r:f64 = color.x();
     let mut g:f64 = color.y();
@@ -15,5 +15,6 @@ pub fn write_color(file: &mut File, color: Color, samples: i32) {
     r = (r*scale).sqrt();
     g = (g*scale).sqrt();
     b = (b*scale).sqrt();
-    file.write(format!("{} {} {}\n", (MAXC*clamp(r, 0.0, 0.999)) as i32, (MAXC*clamp(g, 0.0, 0.999)) as i32, (MAXC*clamp(b, 0.0, 0.999)) as i32).as_bytes()).unwrap();
+    println!("{} {} {}", (MAXC*clamp(r, 0.0, 0.999)) as i32, (MAXC*clamp(g, 0.0, 0.999)) as i32, (MAXC*clamp(b, 0.0, 0.999)) as i32);
+    // file.write(format!("{} {} {}\n", (MAXC*clamp(r, 0.0, 0.999)) as i32, (MAXC*clamp(g, 0.0, 0.999)) as i32, (MAXC*clamp(b, 0.0, 0.999)) as i32).as_bytes()).unwrap();
 }

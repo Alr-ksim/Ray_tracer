@@ -48,7 +48,7 @@ pub fn ray_color(r : Ray, list: &Hitlist, depth: i32) -> Color {
 
 
 fn main() {
-    let mut file = File::create("image.ppm").unwrap();
+    // let mut file = File::create("image.ppm").unwrap();
 
     const AS_RATIO:f64 = 3.0 / 2.0;
     const I_WID:i32 = 1200;
@@ -110,7 +110,8 @@ fn main() {
     let aperture:f64 = 0.1;
     let cam:Camera = Camera::new(lookfrom.clone(), lookat.clone(), vup.clone(), 20.0, AS_RATIO, aperture, dist_to_focus);
 
-    file.write(format!("P3\n{} {}\n255\n", I_WID, I_HIT).as_bytes());
+    // file.write(format!("P3\n{} {}\n255\n", I_WID, I_HIT).as_bytes());
+    print!("P3\n{} {}\n255\n", I_WID, I_HIT);
     let mut j:i32 = I_HIT - 1;
     while j >= 0 {
         let mut i:i32 = 0;
@@ -124,7 +125,7 @@ fn main() {
                 color += ray_color(r, &list, MAXDEEP);
                 s += 1;
             }
-            color::write_color(&mut file, color, SAMPLES);
+            color::write_color(color, SAMPLES);
             i += 1;
         }
         j -= 1;
