@@ -63,8 +63,9 @@ fn main() {
     let bar = ProgressBar::new(I_HIT as u64);
 
     let mut list:Hitlist = Hitlist::new();
-    let mat_g:Lamber = Lamber::new(Color::new(0.7, 0.7, 0.7)); // 0.5
-    let sph_g:Sphere <Lamber> = Sphere::new(Vec3::new(0.0, -1000.0, 0.0), 1000.0, mat_g.clone());
+    let mat_g:Lamber = Lamber::new(Color::new(0.5, 0.5, 0.5)); // 0.5
+    let arc_g = Arc::new(Sphere::new(Vec3::new(0.0, -1000.0, 0.0), 1000.0, mat_g.clone()));
+    list.add(arc_g);
 
     let mut a:i32 = -11;
     while a < 11 {
@@ -81,7 +82,7 @@ fn main() {
                     list.add(arc_s);
                 } else if chmat < 0.95 {
                     let lbc:Color = Color::randvr(0.5, 1.0);
-                    let fuzz:f64 = randf(0.0, 0.3); //0.0 -> 0.5
+                    let fuzz:f64 = randf(0.0, 0.5); //0.0 -> 0.5
                     let mat:Metal = Metal::new(lbc, fuzz);
                     let arc_s = Arc::new(Sphere::new(ct.clone(), 0.2, mat));
                     list.add(arc_s);
