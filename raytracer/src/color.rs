@@ -32,7 +32,7 @@ pub fn write_color(file: &mut File, color: Color, samples: i32) {
     r = (r * scale).sqrt();
     g = (g * scale).sqrt();
     b = (b * scale).sqrt();
-    file.write(
+    file.write_all(
         format!(
             "{} {} {}\n",
             (MAXC * clamp(r, 0.0, 0.999)) as i32,
